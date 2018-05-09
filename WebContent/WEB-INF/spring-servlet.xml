@@ -1,0 +1,98 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/mvc
+     http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<context:component-scan
+		base-package="model,controller,service,dao" />
+	
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		id="jspViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/librarydb"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="admin"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+		id="sessionFactory">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>model.Vendor</value>
+				<value>model.Book</value>
+				<value>model.Payment</value>	
+				<value>model.BookIssue</value>
+				<value>model.User</value>
+	            <value>model.Librarian</value>	
+	            <value>model.VendorBookList</value>		
+                 <value>model.Feedback</value>		
+<!-- 				<value>model.Admin</value>
+ -->			</list>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>			
+		</property>
+	</bean>
+
+	<bean class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		id="hibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1000000"></property>
+	</bean>
+	 <mvc:view-controller path="/issue" view-name="IssueBook" />
+	 <mvc:view-controller path="/vendorlogin" view-name="vendorlogin" />
+	 <mvc:view-controller path="/librarian_registration" view-name="librarian_registration" />
+	 <mvc:view-controller path="/userlogin" view-name="userlogin" />
+	  <mvc:view-controller path="/userreg" view-name="userreg" />
+	  <mvc:view-controller path="/IssueBook" view-name="IssueBook" />
+	  <mvc:view-controller path="/RequestIssueList" view-name="RequestIssueList" />
+	  <mvc:view-controller path="/listBook" view-name="listBook" />
+	  <mvc:view-controller path="/Supplybooks" view-name="Supplybooks" />
+	  <mvc:view-controller path="/adminlogin" view-name="adminlogin" />
+	  <mvc:view-controller path="/requestpayment" view-name="requestpayment" />
+	  <mvc:view-controller path="/UpdateBook" view-name="UpdateBook" />
+	   <mvc:view-controller path="/listadminbook" view-name="listadminbook" />
+	   <mvc:view-controller path="/issuesucess" view-name="issuesucess" />
+	   <mvc:view-controller path="/home" view-name="home" />
+	    <mvc:view-controller path="/search" view-name="search" />
+	    	    <mvc:view-controller path="/IssuedSuccessfully" view-name="IssuedSuccessfully" />
+	    
+	    <mvc:view-controller path="/Requestbooks" view-name="Requestbooks" />
+	    	    <mvc:view-controller path="/invalidadmin" view-name="invalidadmin" />
+	    
+	   
+	 <!--  <mvc:view-controller path="/userreg" view-name="userreg" /> -->
+	<!--  <mvc:view-controller path="/issue" view-name="IssueBook" />
+	 <mvc:view-controller path="/issue" view-name="IssueBook" />
+	 <mvc:view-controller path="/issue" view-name="IssueBook" />
+	 <mvc:view-controller path="/issue" view-name="IssueBook" /> -->
+<mvc:annotation-driven/>
+</beans>
